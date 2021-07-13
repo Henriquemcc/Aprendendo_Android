@@ -2,20 +2,18 @@ package io.github.henriquemcc.agenda
 
 import android.app.Activity
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.ListView
 
 class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val alunos = arrayListOf("Alex", "José", "Fran")
-        val primeiroAluno = findViewById<TextView>(R.id.textView)
-        val segundoAluno = findViewById<TextView>(R.id.textView2)
-        val terceiroAluno = findViewById<TextView>(R.id.textView3)
-        primeiroAluno.text = alunos[0]
-        segundoAluno.text = alunos[1]
-        terceiroAluno.text = alunos[2]
+        val alunos = arrayListOf("Alex", "José", "Fran", "Maria", "Ana")
+        val listaDeAlunos = findViewById<ListView>(R.id.activity_main_lista_de_alunos)
+        listaDeAlunos.adapter =
+            ArrayAdapter(this, android.R.layout.simple_list_item_1, alunos)
     }
 
 }
