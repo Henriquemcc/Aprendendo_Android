@@ -9,6 +9,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Toast.makeText(this, "Henrique", Toast.LENGTH_LONG).show()
+        setContentView(R.layout.activity_main)
     }
 
 }
