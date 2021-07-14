@@ -1,17 +1,20 @@
 package io.github.henriquemcc.agenda.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import io.github.henriquemcc.agenda.R
+import io.github.henriquemcc.agenda.dao.AlunoDataAccessObject
 import io.github.henriquemcc.agenda.model.Aluno
 
 class FormularioAlunoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formulario_aluno)
+
+        val dataAccessObjectAluno = AlunoDataAccessObject()
 
         val campoNome = findViewById<EditText>(R.id.activity_formulario_aluno_nome)
         val campoTelefone = findViewById<EditText>(R.id.activity_formulario_aluno_telefone)
@@ -24,11 +27,11 @@ class FormularioAlunoActivity : AppCompatActivity() {
             val email = campoEmail.text.toString()
 
             val alunoCriado = Aluno(nome, telefone, email)
-            Toast.makeText(
-                this,
-                "${alunoCriado.nome} - ${alunoCriado.telefone} - ${alunoCriado.email}",
-                Toast.LENGTH_SHORT
-            ).show()
+            dataAccessObjectAluno.salvar(alunoCriado)
+
+            startActivity(
+                Intent(this, ListaAlunosActivity().javaClass)
+            )
         }
     }
 }
