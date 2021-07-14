@@ -9,27 +9,43 @@ import io.github.henriquemcc.agenda.dao.AlunoDataAccessObject
 import io.github.henriquemcc.agenda.model.Aluno
 
 class FormularioAlunoActivity : AppCompatActivity() {
+
+    private val campoNome: EditText
+        get() = findViewById(R.id.activity_formulario_aluno_nome)
+
+    private val campoTelefone: EditText
+        get() = findViewById(R.id.activity_formulario_aluno_telefone)
+
+    private val campoEmail: EditText
+        get() = findViewById(R.id.activity_formulario_aluno_email)
+
+    private val dataAccessObjectAluno = AlunoDataAccessObject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formulario_aluno)
         title = "Novo aluno"
+        configurarBotaoSalvar()
+    }
 
-        val dataAccessObjectAluno = AlunoDataAccessObject()
-
-        val campoNome = findViewById<EditText>(R.id.activity_formulario_aluno_nome)
-        val campoTelefone = findViewById<EditText>(R.id.activity_formulario_aluno_telefone)
-        val campoEmail = findViewById<EditText>(R.id.activity_formulario_aluno_email)
-
+    private fun configurarBotaoSalvar() {
         val botaoSalvar = findViewById<Button>(R.id.activity_formulario_aluno_botao_salvar)
         botaoSalvar.setOnClickListener {
-            val nome = campoNome.text.toString()
-            val telefone = campoTelefone.text.toString()
-            val email = campoEmail.text.toString()
-
-            val alunoCriado = Aluno(nome, telefone, email)
-            dataAccessObjectAluno.salvar(alunoCriado)
-
-            finish()
+            val alunoCriado = criarAluno()
+            salvar(alunoCriado)
         }
+    }
+
+    private fun salvar(alunoCriado: Aluno) {
+        dataAccessObjectAluno.salvar(alunoCriado)
+        finish()
+    }
+
+    private fun criarAluno(): Aluno {
+        val nome = campoNome.text.toString()
+        val telefone = campoTelefone.text.toString()
+        val email = campoEmail.text.toString()
+
+        return Aluno(nome, telefone, email)
     }
 }
