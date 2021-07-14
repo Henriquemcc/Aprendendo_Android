@@ -11,23 +11,35 @@ import io.github.henriquemcc.agenda.dao.AlunoDataAccessObject
 
 class ListaAlunosActivity : AppCompatActivity() {
 
+    private val dataAccessObjectAluno = AlunoDataAccessObject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_alunos)
+        configurarFloatingActionButtonNovoAluno()
+        title = "Lista de alunos"
+    }
+
+    private fun configurarFloatingActionButtonNovoAluno() {
         val botaoNovoAluno =
             findViewById<FloatingActionButton>(R.id.activity_lista_alunos_floatingActionButton_novo_aluno)
         botaoNovoAluno.setOnClickListener {
-            startActivity(
-                Intent(this, FormularioAlunoActivity().javaClass)
-            )
+            abrirFormularioAlunoActivity()
         }
-        title = "Lista de alunos"
+    }
 
+    private fun abrirFormularioAlunoActivity() {
+        startActivity(
+            Intent(this, FormularioAlunoActivity().javaClass)
+        )
     }
 
     override fun onResume() {
         super.onResume()
-        val dataAccessObjectAluno = AlunoDataAccessObject()
+        configurarLista()
+    }
+
+    private fun configurarLista() {
         val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_de_alunos_listview)
         listaDeAlunos.adapter =
             ArrayAdapter(this, android.R.layout.simple_list_item_1, dataAccessObjectAluno.todos())
