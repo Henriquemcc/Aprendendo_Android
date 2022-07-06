@@ -1,17 +1,17 @@
 [Versão em Português](README.md)
 
-# Learning ____
+# Learning how to develop Android apps
 
-This repository contains the files developed during the ____ course held on the [Alura Cursos Online](https://alura.com.br) platform.
+This repository contains the files developed during the Android course held on the [Alura Cursos Online](https://alura.com.br) platform.
 
 ## Alura's Official Repository
 
 The official files for the course, developed by the instructor, are available in the GitHub repository of this Alura course:
 
-[____](____).
+[Android parte 1: crie um app mobile](https://github.com/alura-cursos/fundamentos-android-parte-1).
 
 ## Courses
 
 The courses in which these files were developed:
 
-[____](____).
+[Android parte 1: crie um app mobile](https://cursos.alura.com.br/course/android-sua-primeira-app-mobile).
