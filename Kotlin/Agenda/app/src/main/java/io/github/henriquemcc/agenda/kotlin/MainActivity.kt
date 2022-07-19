@@ -6,13 +6,15 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity: Activity()
+class MainActivity: AppCompatActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        title = "Lista de alunos"
 
         // Lista de alunos
         val alunos = listOf<String>("João", "José", "Maria", "Carlos", "Gabriel", "Ana")
