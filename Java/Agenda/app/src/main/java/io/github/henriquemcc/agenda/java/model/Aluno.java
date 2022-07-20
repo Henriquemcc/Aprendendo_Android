@@ -27,4 +27,10 @@ public class Aluno
 	{
 		return email;
 	}
+
+	@Override
+	public String toString()
+	{
+		return nome;
+	}
 }

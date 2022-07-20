@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.github.henriquemcc.agenda.java.R;
+import io.github.henriquemcc.agenda.java.dao.AlunoDAO;
 
 public class ListaAlunosActivity extends AppCompatActivity
 {
@@ -18,15 +19,12 @@ public class ListaAlunosActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
+
+        final AlunoDAO dao = new AlunoDAO();
+
         setTitle("Lista de alunos");
 
-        // Lista de alunos
-        final List<String> alunos = Arrays.asList("João", "José", "Maria", "Carlos", "Gabriel", "Ana");
-
-        // List View com os alunos
         final ListView listViewListaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
-
-        // Adicionando adaptador com uma lista simples de itens
-        listViewListaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos));
+        listViewListaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dao.todos()));
     }
 }
