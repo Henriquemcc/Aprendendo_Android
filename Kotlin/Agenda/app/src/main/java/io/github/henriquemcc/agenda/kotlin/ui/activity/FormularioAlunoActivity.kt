@@ -36,7 +36,7 @@ class FormularioAlunoActivity : AppCompatActivity()
 				val alunoCriado = Aluno(nome, telefone, email)
 				dao.salva(alunoCriado)
 
-				startActivity(Intent(this@FormularioAlunoActivity, ListaAlunosActivity::class.java))
+				finish()
 			}
 		})
 	}
