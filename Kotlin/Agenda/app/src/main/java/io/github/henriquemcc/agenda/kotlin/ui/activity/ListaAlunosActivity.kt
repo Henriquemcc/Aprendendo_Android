@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import io.github.henriquemcc.agenda.kotlin.R
+import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 
 class ListaAlunosActivity: AppCompatActivity()
 {
@@ -12,15 +13,12 @@ class ListaAlunosActivity: AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_alunos)
+
+        val dao = AlunoDAO()
+
         title = "Lista de alunos"
 
-        // Lista de alunos
-        val alunos = listOf<String>("João", "José", "Maria", "Carlos", "Gabriel", "Ana")
-
-        // List View com os alunos
         val listViewListaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
-
-        // Adicionando adaptador com uma lista simples de itens
-        listViewListaDeAlunos.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alunos)
+        listViewListaDeAlunos.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dao.todos())
     }
 }

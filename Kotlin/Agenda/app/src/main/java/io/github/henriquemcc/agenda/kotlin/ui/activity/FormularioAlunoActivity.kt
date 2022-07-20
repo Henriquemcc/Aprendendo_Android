@@ -1,5 +1,6 @@
 package io.github.henriquemcc.agenda.kotlin.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import io.github.henriquemcc.agenda.kotlin.R
+import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
 
 class FormularioAlunoActivity : AppCompatActivity()
@@ -15,6 +17,8 @@ class FormularioAlunoActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_formulario_aluno)
+
+		val dao = AlunoDAO()
 
 		val campoNome = findViewById<EditText>(R.id.activity_formulario_aluno_nome)
 		val campoTelefone = findViewById<EditText>(R.id.activity_formulario_aluno_telefone)
@@ -30,7 +34,9 @@ class FormularioAlunoActivity : AppCompatActivity()
 				val email = campoEmail.text.toString()
 
 				val alunoCriado = Aluno(nome, telefone, email)
-				Toast.makeText(this@FormularioAlunoActivity, "${alunoCriado.nome} - ${alunoCriado.telefone} - ${alunoCriado.email}", Toast.LENGTH_SHORT).show()
+				dao.salva(alunoCriado)
+
+				startActivity(Intent(this@FormularioAlunoActivity, ListaAlunosActivity::class.java))
 			}
 		})
 	}
