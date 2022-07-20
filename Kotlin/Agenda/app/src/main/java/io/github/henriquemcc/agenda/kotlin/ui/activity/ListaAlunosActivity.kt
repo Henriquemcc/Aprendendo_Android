@@ -12,29 +12,42 @@ import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 
 class ListaAlunosActivity : AppCompatActivity()
 {
+	private val TITULO_APPBAR = "Lista de alunos"
+	private val dao = AlunoDAO()
+
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_lista_alunos)
+		title = TITULO_APPBAR
+		configuraFabNovoAluno()
+	}
 
-		title = "Lista de alunos"
-
+	private fun configuraFabNovoAluno()
+	{
 		val botaoNovoAluno = findViewById<FloatingActionButton>(R.id.activity_lista_alunos_fab_novo_aluno)
 		botaoNovoAluno.setOnClickListener(object : View.OnClickListener
 		{
 			override fun onClick(p0: View?)
 			{
-                startActivity(Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java))
+				abreFormularioAlunoActivity()
 			}
 		})
+	}
+
+	private fun abreFormularioAlunoActivity()
+	{
+		startActivity(Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java))
 	}
 
 	override fun onResume()
 	{
 		super.onResume()
+		configuraLista()
+	}
 
-		val dao = AlunoDAO()
-
+	private fun configuraLista()
+	{
 		val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
 		listaDeAlunos.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dao.todos())
 	}
