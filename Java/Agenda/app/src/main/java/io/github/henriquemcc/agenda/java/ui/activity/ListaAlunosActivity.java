@@ -19,25 +19,33 @@ import io.github.henriquemcc.agenda.java.dao.AlunoDAO;
 
 public class ListaAlunosActivity extends AppCompatActivity
 {
+	private final String TITULO_APPBAR = "Lista de alunos";
+	private final AlunoDAO dao = new AlunoDAO();
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_alunos);
+		setTitle(TITULO_APPBAR);
+		configuraFabNovoAluno();
+	}
 
-		setTitle("Lista de alunos");
-
+	private void configuraFabNovoAluno()
+	{
 		final FloatingActionButton botaoNovoAluno = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
 		botaoNovoAluno.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)
 			{
-				startActivity(new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class));
+				abreFormularioAlunoActivity();
 			}
 		});
+	}
 
-
+	private void abreFormularioAlunoActivity()
+	{
+		startActivity(new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class));
 	}
 
 	@Override
@@ -45,8 +53,11 @@ public class ListaAlunosActivity extends AppCompatActivity
 	{
 		super.onResume();
 
-		final AlunoDAO dao = new AlunoDAO();
+		configuraLista();
+	}
 
+	private void configuraLista()
+	{
 		final ListView listViewListaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
 		listViewListaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dao.todos()));
 	}
