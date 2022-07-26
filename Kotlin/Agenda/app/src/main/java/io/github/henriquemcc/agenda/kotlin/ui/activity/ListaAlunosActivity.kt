@@ -51,12 +51,16 @@ class ListaAlunosActivity : AppCompatActivity()
 	private fun configuraLista()
 	{
 		val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
+		val alunos = dao.todos()
 		listaDeAlunos.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dao.todos())
 		listaDeAlunos.setOnItemClickListener(object : AdapterView.OnItemClickListener
 		{
 			override fun onItemClick(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long)
 			{
-				Log.i("posicao aluno", "" + posicao)
+				val alunoEscolhido = alunos.get(posicao)
+				val vaiParaFormularioActivity = Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java)
+				vaiParaFormularioActivity.putExtra("aluno", alunoEscolhido)
+				startActivity(vaiParaFormularioActivity)
 			}
 
 		})

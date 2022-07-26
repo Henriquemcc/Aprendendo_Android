@@ -2,12 +2,15 @@ package io.github.henriquemcc.agenda.kotlin.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
+import java.io.Serializable
 
 class FormularioAlunoActivity : AppCompatActivity()
 {
@@ -17,6 +20,7 @@ class FormularioAlunoActivity : AppCompatActivity()
 	private var campoEmail: EditText? = null
 	private val dao = AlunoDAO()
 
+	@RequiresApi(33)
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
@@ -24,6 +28,17 @@ class FormularioAlunoActivity : AppCompatActivity()
 		title = TITULO_APPBAR
 		inicializacaoDosCampos()
 		configuraBotaoSalvar()
+
+		val dados = intent
+		val aluno = dados.getSerializableExtra("aluno", Aluno::class.java)
+
+		if (aluno != null)
+		{
+			campoNome?.setText(aluno.nome)
+			campoEmail?.setText(aluno.email)
+			campoTelefone?.setText(aluno.telefone)
+		}
+
 	}
 
 	private fun configuraBotaoSalvar()

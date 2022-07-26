@@ -1,6 +1,8 @@
 package io.github.henriquemcc.agenda.kotlin.model
 
-class Aluno(val nome: String, val telefone: String, val email: String)
+import java.io.Serializable
+
+class Aluno(val nome: String, val telefone: String, val email: String): Serializable
 {
 	override fun toString(): String
 	{
