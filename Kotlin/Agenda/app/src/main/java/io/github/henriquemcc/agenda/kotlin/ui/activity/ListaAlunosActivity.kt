@@ -2,7 +2,9 @@ package io.github.henriquemcc.agenda.kotlin.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -50,5 +52,13 @@ class ListaAlunosActivity : AppCompatActivity()
 	{
 		val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
 		listaDeAlunos.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dao.todos())
+		listaDeAlunos.setOnItemClickListener(object : AdapterView.OnItemClickListener
+		{
+			override fun onItemClick(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long)
+			{
+				Log.i("posicao aluno", "" + posicao)
+			}
+
+		})
 	}
 }
