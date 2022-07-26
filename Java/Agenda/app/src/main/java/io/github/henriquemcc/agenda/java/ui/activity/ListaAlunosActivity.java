@@ -2,7 +2,9 @@ package io.github.henriquemcc.agenda.java.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -58,7 +60,15 @@ public class ListaAlunosActivity extends AppCompatActivity
 
 	private void configuraLista()
 	{
-		final ListView listViewListaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
-		listViewListaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dao.todos()));
+		final ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
+		listaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dao.todos()));
+		listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id)
+			{
+				Log.i("posicao aluno", "" + posicao);
+			}
+		});
 	}
 }
