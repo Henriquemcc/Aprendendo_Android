@@ -18,6 +18,7 @@ import java.util.List;
 
 import io.github.henriquemcc.agenda.java.R;
 import io.github.henriquemcc.agenda.java.dao.AlunoDAO;
+import io.github.henriquemcc.agenda.java.model.Aluno;
 
 public class ListaAlunosActivity extends AppCompatActivity
 {
@@ -61,13 +62,17 @@ public class ListaAlunosActivity extends AppCompatActivity
 	private void configuraLista()
 	{
 		final ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
+		final List<Aluno> alunos = dao.todos();
 		listaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dao.todos()));
 		listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id)
 			{
-				Log.i("posicao aluno", "" + posicao);
+				Aluno alunoEscolhido = alunos.get(posicao);
+				Intent vaiParaFormularioActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
+				vaiParaFormularioActivity.putExtra("aluno", alunoEscolhido);
+				startActivity(vaiParaFormularioActivity);
 			}
 		});
 	}

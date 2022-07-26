@@ -1,6 +1,8 @@
 package io.github.henriquemcc.agenda.java.model;
 
-public class Aluno
+import java.io.Serializable;
+
+public class Aluno implements Serializable
 {
 	private final String nome;
 	private final String telefone;
