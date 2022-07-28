@@ -14,6 +14,11 @@ public class AlunoDAO
 	{
 		aluno.setId(contadorDeIds);
 		alunos.add(aluno);
+		atualizaIds();
+	}
+
+	private void atualizaIds()
+	{
 		contadorDeIds++;
 	}
 

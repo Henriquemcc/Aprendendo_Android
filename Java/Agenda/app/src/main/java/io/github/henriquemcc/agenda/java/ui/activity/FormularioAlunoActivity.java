@@ -1,6 +1,5 @@
 package io.github.henriquemcc.agenda.java.ui.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,9 +12,10 @@ import io.github.henriquemcc.agenda.java.R;
 import io.github.henriquemcc.agenda.java.dao.AlunoDAO;
 import io.github.henriquemcc.agenda.java.model.Aluno;
 
-public class FormularioAlunoActivity extends AppCompatActivity
+public class FormularioAlunoActivity extends AppCompatActivity implements ConstantesActivities
 {
-	private final String TITULO_APPBAR = "Novo aluno";
+	private final String TITULO_APPBAR_NOVO_ALUNO = "Novo aluno";
+	private final String TITULO_APPBAR_EDITA_ALUNO = "Edita aluno";
 	private final AlunoDAO dao = new AlunoDAO();
 	private EditText campoNome;
 	private EditText campoTelefone;
@@ -28,27 +28,35 @@ public class FormularioAlunoActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_formulario_aluno);
-		setTitle(TITULO_APPBAR);
 		inicializacaoDosCampos();
 		configuraBotaoSalvar();
+		carregaAluno();
+	}
 
+	private void carregaAluno()
+	{
 		Intent dados = getIntent();
-
-		if (dados.hasExtra("aluno"))
+		if (dados.hasExtra(CHAVE_ALUNO))
 		{
-			aluno = (Aluno) dados.getSerializableExtra("aluno");
-			if (aluno != null)
-			{
-				campoNome.setText(aluno.getNome());
-				campoEmail.setText(aluno.getEmail());
-				campoTelefone.setText(aluno.getTelefone());
-			}
+			setTitle(TITULO_APPBAR_EDITA_ALUNO);
+			aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
+			preencheCampos();
 		}
 		else
 		{
+			setTitle(TITULO_APPBAR_NOVO_ALUNO);
 			aluno = new Aluno();
 		}
+	}
 
+	private void preencheCampos()
+	{
+		if (aluno != null)
+		{
+			campoNome.setText(aluno.getNome());
+			campoEmail.setText(aluno.getEmail());
+			campoTelefone.setText(aluno.getTelefone());
+		}
 	}
 
 	private void configuraBotaoSalvar()
@@ -57,23 +65,34 @@ public class FormularioAlunoActivity extends AppCompatActivity
 		botaoSalvar.setOnClickListener(
 				new View.OnClickListener()
 				{
-
 					@Override
 					public void onClick(View view)
 					{
-						preencheAluno();
-						if (aluno.temIdValido())
-						{
-							dao.edita(aluno);
-						}
-						else
-						{
-							dao.salva(aluno);
-						}
-						finish();
+						finalizaFormulario();
 					}
 				}
 		);
+	}
+
+	private void finalizaFormulario()
+	{
+		preencheAluno();
+		if (aluno.temIdValido())
+		{
+			dao.edita(aluno);
+		}
+		else
+		{
+			dao.salva(aluno);
+		}
+		finish();
+	}
+
+	private void inicializacaoDosCampos()
+	{
+		campoNome = findViewById(R.id.activity_formulario_aluno_nome);
+		campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
+		campoEmail = findViewById(R.id.activity_formulario_aluno_email);
 	}
 
 	private void preencheAluno()
@@ -85,12 +104,5 @@ public class FormularioAlunoActivity extends AppCompatActivity
 		aluno.setNome(nome);
 		aluno.setTelefone(telefone);
 		aluno.setEmail(email);
-	}
-
-	private void inicializacaoDosCampos()
-	{
-		campoNome = findViewById(R.id.activity_formulario_aluno_nome);
-		campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
-		campoEmail = findViewById(R.id.activity_formulario_aluno_email);
 	}
 }
