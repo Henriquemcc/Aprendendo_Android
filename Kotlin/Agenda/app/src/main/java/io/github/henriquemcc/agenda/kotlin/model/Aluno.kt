@@ -2,7 +2,7 @@ package io.github.henriquemcc.agenda.kotlin.model
 
 import java.io.Serializable
 
-class Aluno(val nome: String, val telefone: String, val email: String): Serializable
+class Aluno(var nome: String = "", var telefone: String = "", var email: String = ""): Serializable
 {
 	var id: Int = 0
 

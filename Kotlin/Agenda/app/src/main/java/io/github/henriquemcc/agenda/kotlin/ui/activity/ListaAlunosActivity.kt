@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
+import io.github.henriquemcc.agenda.kotlin.model.Aluno
 
 class ListaAlunosActivity : AppCompatActivity()
 {

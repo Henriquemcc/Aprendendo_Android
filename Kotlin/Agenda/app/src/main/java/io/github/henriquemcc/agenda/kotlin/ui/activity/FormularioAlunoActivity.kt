@@ -2,7 +2,6 @@ package io.github.henriquemcc.agenda.kotlin.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -10,7 +9,6 @@ import androidx.annotation.RequiresApi
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
-import java.io.Serializable
 
 class FormularioAlunoActivity : AppCompatActivity()
 {
@@ -19,6 +17,7 @@ class FormularioAlunoActivity : AppCompatActivity()
 	private var campoTelefone: EditText? = null
 	private var campoEmail: EditText? = null
 	private val dao = AlunoDAO()
+	private var aluno = Aluno()
 
 	@RequiresApi(33)
 	override fun onCreate(savedInstanceState: Bundle?)
@@ -30,15 +29,16 @@ class FormularioAlunoActivity : AppCompatActivity()
 		configuraBotaoSalvar()
 
 		val dados = intent
-		val aluno = dados.getSerializableExtra("aluno", Aluno::class.java)
 
-		if (aluno != null)
+		val alunoObtido = dados.getSerializableExtra("aluno", Aluno::class.java)
+		if (alunoObtido != null)
 		{
-			campoNome?.setText(aluno.nome)
-			campoEmail?.setText(aluno.email)
-			campoTelefone?.setText(aluno.telefone)
+			aluno = alunoObtido
 		}
 
+		campoNome?.setText(aluno.nome)
+		campoEmail?.setText(aluno.email)
+		campoTelefone?.setText(aluno.telefone)
 	}
 
 	private fun configuraBotaoSalvar()
@@ -48,17 +48,18 @@ class FormularioAlunoActivity : AppCompatActivity()
 		{
 			override fun onClick(p0: View?)
 			{
-				val alunoCriado = criaAluno()
-				salva(alunoCriado)
+				preencheAluno()
+				dao.edita(aluno)
+				finish()
 			}
 		})
 	}
 
 	private fun inicializacaoDosCampos()
 	{
-		campoNome = findViewById<EditText>(R.id.activity_formulario_aluno_nome)
-		campoTelefone = findViewById<EditText>(R.id.activity_formulario_aluno_telefone)
-		campoEmail = findViewById<EditText>(R.id.activity_formulario_aluno_email)
+		campoNome = findViewById(R.id.activity_formulario_aluno_nome)
+		campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone)
+		campoEmail = findViewById(R.id.activity_formulario_aluno_email)
 	}
 
 	private fun salva(aluno: Aluno)
@@ -67,12 +68,14 @@ class FormularioAlunoActivity : AppCompatActivity()
 		finish()
 	}
 
-	private fun criaAluno(): Aluno
+	private fun preencheAluno()
 	{
 		val nome = campoNome?.text.toString()
 		val telefone = campoTelefone?.text.toString()
 		val email = campoEmail?.text.toString()
 
-		return Aluno(nome, telefone, email)
+		aluno.nome = nome
+		aluno.telefone = telefone
+		aluno.email = email
 	}
 }
