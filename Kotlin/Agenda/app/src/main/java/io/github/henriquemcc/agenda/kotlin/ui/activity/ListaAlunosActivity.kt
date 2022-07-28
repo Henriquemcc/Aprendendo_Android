@@ -58,6 +58,7 @@ class ListaAlunosActivity : AppCompatActivity()
 			override fun onItemClick(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long)
 			{
 				val alunoEscolhido = alunos.get(posicao)
+				Log.i("idAluno", alunoEscolhido.id.toString())
 				val vaiParaFormularioActivity = Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java)
 				vaiParaFormularioActivity.putExtra("aluno", alunoEscolhido)
 				startActivity(vaiParaFormularioActivity)
