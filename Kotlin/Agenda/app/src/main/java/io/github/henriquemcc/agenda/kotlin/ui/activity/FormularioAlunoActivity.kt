@@ -30,15 +30,15 @@ class FormularioAlunoActivity : AppCompatActivity()
 
 		val dados = intent
 
-		val alunoObtido = dados.getSerializableExtra("aluno", Aluno::class.java)
-		if (alunoObtido != null)
-		{
-			aluno = alunoObtido
+		if (dados.hasExtra("aluno")) {
+			if (dados.getSerializableExtra("aluno", Aluno::class.java) != null)
+			{
+				aluno = dados.getSerializableExtra("aluno", Aluno::class.java)!!
+			}
+			campoNome?.setText(aluno.nome)
+			campoEmail?.setText(aluno.email)
+			campoTelefone?.setText(aluno.telefone)
 		}
-
-		campoNome?.setText(aluno.nome)
-		campoEmail?.setText(aluno.email)
-		campoTelefone?.setText(aluno.telefone)
 	}
 
 	private fun configuraBotaoSalvar()
@@ -49,7 +49,12 @@ class FormularioAlunoActivity : AppCompatActivity()
 			override fun onClick(p0: View?)
 			{
 				preencheAluno()
-				dao.edita(aluno)
+				if (aluno.temIdValido()) {
+					dao.edita(aluno)
+				}
+				else {
+					dao.salva(aluno)
+				}
 				finish()
 			}
 		})
@@ -60,12 +65,6 @@ class FormularioAlunoActivity : AppCompatActivity()
 		campoNome = findViewById(R.id.activity_formulario_aluno_nome)
 		campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone)
 		campoEmail = findViewById(R.id.activity_formulario_aluno_email)
-	}
-
-	private fun salva(aluno: Aluno)
-	{
-		dao.salva(aluno)
-		finish()
 	}
 
 	private fun preencheAluno()

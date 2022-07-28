@@ -10,4 +10,9 @@ class Aluno(var nome: String = "", var telefone: String = "", var email: String 
 	{
 		return nome;
 	}
+
+	fun temIdValido(): Boolean
+	{
+		return id > 0
+	}
 }
