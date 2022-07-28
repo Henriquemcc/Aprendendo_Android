@@ -7,6 +7,7 @@ public class Aluno implements Serializable
 	private final String nome;
 	private final String telefone;
 	private final String email;
+	private int id = 0;
 
 	public Aluno(String nome, String telefone, String email)
 	{
@@ -28,6 +29,16 @@ public class Aluno implements Serializable
 	public String getEmail()
 	{
 		return email;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	@Override
