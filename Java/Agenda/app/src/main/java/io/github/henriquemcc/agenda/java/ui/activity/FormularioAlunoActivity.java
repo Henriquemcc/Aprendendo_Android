@@ -20,6 +20,7 @@ public class FormularioAlunoActivity extends AppCompatActivity
 	private EditText campoNome;
 	private EditText campoTelefone;
 	private EditText campoEmail;
+	private Aluno aluno;
 
 
 	@Override
@@ -32,7 +33,7 @@ public class FormularioAlunoActivity extends AppCompatActivity
 		configuraBotaoSalvar();
 
 		Intent dados = getIntent();
-		Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
+		aluno = (Aluno) dados.getSerializableExtra("aluno");
 
 		if (aluno != null)
 		{
@@ -52,22 +53,23 @@ public class FormularioAlunoActivity extends AppCompatActivity
 					@Override
 					public void onClick(View view)
 					{
-						Aluno alunoCriado = criaAluno();
-						salva(alunoCriado);
+						preencheAluno();
+						dao.edita(aluno);
+						finish();
 					}
 				}
 		);
 	}
 
-	@NonNull
-	private Aluno criaAluno()
+	private void preencheAluno()
 	{
 		final String nome = campoNome.getText().toString();
 		final String telefone = campoTelefone.getText().toString();
 		final String email = campoEmail.getText().toString();
 
-		Aluno alunoCriado = new Aluno(nome, telefone, email);
-		return alunoCriado;
+		aluno.setNome(nome);
+		aluno.setTelefone(telefone);
+		aluno.setEmail(email);
 	}
 
 	private void salva(Aluno aluno)
