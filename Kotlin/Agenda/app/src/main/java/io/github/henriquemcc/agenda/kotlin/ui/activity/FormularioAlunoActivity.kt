@@ -10,9 +10,10 @@ import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
 
-class FormularioAlunoActivity : AppCompatActivity()
+class FormularioAlunoActivity : AppCompatActivity(), ConstantesActivities
 {
-	private val TITULO_APPBAR = "Novo aluno"
+	private val TITULO_APPBAR_NOVO_ALUNO = "Novo aluno"
+	private val TITULO_APPBAR_EDITA_ALUNO = "Edita aluno"
 	private var campoNome: EditText? = null
 	private var campoTelefone: EditText? = null
 	private var campoEmail: EditText? = null
@@ -24,21 +25,36 @@ class FormularioAlunoActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_formulario_aluno)
-		title = TITULO_APPBAR
 		inicializacaoDosCampos()
 		configuraBotaoSalvar()
+		carregaAluno()
+	}
 
+	@RequiresApi(33)
+	private fun carregaAluno()
+	{
 		val dados = intent
 
-		if (dados.hasExtra("aluno")) {
-			if (dados.getSerializableExtra("aluno", Aluno::class.java) != null)
+		if (dados.hasExtra(CHAVE_ALUNO))
+		{
+			title = TITULO_APPBAR_EDITA_ALUNO
+			if (dados.getSerializableExtra(CHAVE_ALUNO, Aluno::class.java) != null)
 			{
-				aluno = dados.getSerializableExtra("aluno", Aluno::class.java)!!
+				aluno = dados.getSerializableExtra(CHAVE_ALUNO, Aluno::class.java)!!
 			}
-			campoNome?.setText(aluno.nome)
-			campoEmail?.setText(aluno.email)
-			campoTelefone?.setText(aluno.telefone)
+			preencheCampos()
 		}
+		else
+		{
+			title = TITULO_APPBAR_NOVO_ALUNO
+		}
+	}
+
+	private fun preencheCampos()
+	{
+		campoNome?.setText(aluno.nome)
+		campoTelefone?.setText(aluno.telefone)
+		campoEmail?.setText(aluno.email)
 	}
 
 	private fun configuraBotaoSalvar()
@@ -48,16 +64,23 @@ class FormularioAlunoActivity : AppCompatActivity()
 		{
 			override fun onClick(p0: View?)
 			{
-				preencheAluno()
-				if (aluno.temIdValido()) {
-					dao.edita(aluno)
-				}
-				else {
-					dao.salva(aluno)
-				}
-				finish()
+				finalizaFormulario()
 			}
 		})
+	}
+
+	private fun finalizaFormulario()
+	{
+		preencheAluno()
+		if (aluno.temIdValido())
+		{
+			dao.edita(aluno)
+		}
+		else
+		{
+			dao.salva(aluno)
+		}
+		finish()
 	}
 
 	private fun inicializacaoDosCampos()

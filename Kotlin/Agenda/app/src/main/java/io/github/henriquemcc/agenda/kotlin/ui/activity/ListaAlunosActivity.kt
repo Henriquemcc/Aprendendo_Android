@@ -13,7 +13,7 @@ import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
 
-class ListaAlunosActivity : AppCompatActivity()
+class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 {
 	private val TITULO_APPBAR = "Lista de alunos"
 	private val dao = AlunoDAO()
@@ -33,12 +33,12 @@ class ListaAlunosActivity : AppCompatActivity()
 		{
 			override fun onClick(p0: View?)
 			{
-				abreFormularioAlunoActivity()
+				abreFormularioModoInsereAluno()
 			}
 		})
 	}
 
-	private fun abreFormularioAlunoActivity()
+	private fun abreFormularioModoInsereAluno()
 	{
 		startActivity(Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java))
 	}
@@ -53,18 +53,33 @@ class ListaAlunosActivity : AppCompatActivity()
 	{
 		val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
 		val alunos = dao.todos()
-		listaDeAlunos.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dao.todos())
+		configuraAdapter(listaDeAlunos, alunos)
+		configuraListenerDeCliquePorItem(listaDeAlunos)
+	}
+
+	private fun configuraListenerDeCliquePorItem(listaDeAlunos: ListView)
+	{
 		listaDeAlunos.setOnItemClickListener(object : AdapterView.OnItemClickListener
 		{
-			override fun onItemClick(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long)
+			override fun onItemClick(adapterView: AdapterView<*>?, p1: View?, posicao: Int, id: Long)
 			{
-				val alunoEscolhido = alunos.get(posicao)
+				val alunoEscolhido = adapterView?.getItemAtPosition(posicao) as Aluno
 				Log.i("idAluno", alunoEscolhido.id.toString())
-				val vaiParaFormularioActivity = Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java)
-				vaiParaFormularioActivity.putExtra("aluno", alunoEscolhido)
-				startActivity(vaiParaFormularioActivity)
+				abreFormularioModoEditaAluno(alunoEscolhido)
 			}
 
 		})
+	}
+
+	private fun abreFormularioModoEditaAluno(aluno: Aluno)
+	{
+		val vaiParaFormularioActivity = Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java)
+		vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno)
+		startActivity(vaiParaFormularioActivity)
+	}
+
+	private fun configuraAdapter(listaDeAlunos: ListView?, alunos: List<Aluno>)
+	{
+		listaDeAlunos?.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alunos)
 	}
 }

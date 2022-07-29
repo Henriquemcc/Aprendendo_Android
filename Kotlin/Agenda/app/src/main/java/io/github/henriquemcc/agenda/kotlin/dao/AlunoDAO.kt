@@ -14,6 +14,11 @@ class AlunoDAO
 	{
 		aluno.id = contadorDeIds
 		alunos.add(aluno)
+		atualizaIds()
+	}
+
+	private fun atualizaIds()
+	{
 		contadorDeIds++
 	}
 
