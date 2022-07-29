@@ -63,6 +63,16 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 		final List<Aluno> alunos = dao.todos();
 		configuraAdapter(listaDeAlunos, alunos);
 		configuraListenerDeCliquePorItem(listaDeAlunos);
+		listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+		{
+			@Override
+			public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long id)
+			{
+				Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+				dao.remove(alunoEscolhido);
+				return true;
+			}
+		});
 	}
 
 	private void configuraListenerDeCliquePorItem(ListView listaDeAlunos)

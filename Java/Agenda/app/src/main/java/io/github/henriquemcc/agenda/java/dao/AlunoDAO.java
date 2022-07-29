@@ -22,7 +22,8 @@ public class AlunoDAO
 		contadorDeIds++;
 	}
 
-	public void edita(Aluno aluno) {
+	public Aluno buscaAlunoPeloId(Aluno aluno)
+	{
 		if (aluno != null)
 		{
 			for (int indice = 0; indice < alunos.size(); indice++)
@@ -31,11 +32,29 @@ public class AlunoDAO
 				{
 					if (alunos.get(indice).getId() == aluno.getId())
 					{
-						alunos.set(indice, aluno);
-						break;
+						return alunos.get(indice);
 					}
 				}
 			}
+		}
+		return null;
+	}
+
+	public void edita(Aluno aluno) {
+		Aluno alunoEncontrado = buscaAlunoPeloId(aluno);
+		if (alunoEncontrado != null)
+		{
+			int posicaoDoAluno = alunos.indexOf(alunoEncontrado);
+			alunos.set(posicaoDoAluno, aluno);
+		}
+	}
+
+	public void remove(Aluno aluno)
+	{
+		Aluno alunoDevolvido = buscaAlunoPeloId(aluno);
+		if (alunoDevolvido != null)
+		{
+			alunos.remove(alunoDevolvido);
 		}
 	}
 
