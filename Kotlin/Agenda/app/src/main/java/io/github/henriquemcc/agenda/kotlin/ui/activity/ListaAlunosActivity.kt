@@ -17,6 +17,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 {
 	private val TITULO_APPBAR = "Lista de alunos"
 	private val dao = AlunoDAO()
+	private var arrayAdapter: ArrayAdapter<Any>? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -61,6 +62,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 			{
 				val alunoEscolhido = adapterView?.getItemAtPosition(posicao) as Aluno
 				dao.remove(alunoEscolhido)
+				arrayAdapter?.remove(alunoEscolhido)
 				return true
 			}
 		})
@@ -89,6 +91,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 
 	private fun configuraAdapter(listaDeAlunos: ListView?, alunos: List<Aluno>)
 	{
-		listaDeAlunos?.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alunos)
+		arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alunos)
+		listaDeAlunos?.adapter = arrayAdapter
 	}
 }
