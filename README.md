@@ -10,8 +10,12 @@ Os arquivos oficiais do curso, desenvolvidos pelo instrutor, estão disponíveis
 
 [Android parte 1: crie um app mobile](https://github.com/alura-cursos/fundamentos-android-parte-1).
 
+[Android parte 2: avançando com listeners, menu e UI](https://github.com/alura-cursos/fundamentos-android-parte-2).
+
 ## Cursos
 
 Os cursos em que estes arquivos foram desenvolvidos:
 
 [Android parte 1: crie um app mobile](https://cursos.alura.com.br/course/android-sua-primeira-app-mobile).
+
+[Android parte 2: avançando com listeners, menu e UI](https://cursos.alura.com.br/course/android-avancando-listeners-menu-ui).
