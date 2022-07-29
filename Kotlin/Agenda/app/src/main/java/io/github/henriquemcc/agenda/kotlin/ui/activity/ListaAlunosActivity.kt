@@ -55,6 +55,15 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 		val alunos = dao.todos()
 		configuraAdapter(listaDeAlunos, alunos)
 		configuraListenerDeCliquePorItem(listaDeAlunos)
+		listaDeAlunos.setOnItemLongClickListener(object : AdapterView.OnItemLongClickListener
+		{
+			override fun onItemLongClick(adapterView: AdapterView<*>?, p1: View?, posicao: Int, id: Long): Boolean
+			{
+				val alunoEscolhido = adapterView?.getItemAtPosition(posicao) as Aluno
+				dao.remove(alunoEscolhido)
+				return true
+			}
+		})
 	}
 
 	private fun configuraListenerDeCliquePorItem(listaDeAlunos: ListView)
