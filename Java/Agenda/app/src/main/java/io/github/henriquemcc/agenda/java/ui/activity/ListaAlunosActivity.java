@@ -23,6 +23,7 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 {
 	private final String TITULO_APPBAR = "Lista de alunos";
 	private final AlunoDAO dao = new AlunoDAO();
+	private ArrayAdapter arrayAdapter;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -70,6 +71,7 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 			{
 				Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
 				dao.remove(alunoEscolhido);
+				arrayAdapter.remove(alunoEscolhido);
 				return true;
 			}
 		});
@@ -98,6 +100,7 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 
 	private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos)
 	{
-		listaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos));
+		arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+		listaDeAlunos.setAdapter(arrayAdapter);
 	}
 }
