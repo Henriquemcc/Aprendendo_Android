@@ -48,9 +48,14 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 	@Override
 	public boolean onContextItemSelected(@NonNull MenuItem item)
 	{
-		final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		final Aluno alunoEscolhido = (Aluno) adapter.getItem(menuInfo.position);
-		remove(alunoEscolhido);
+		final int itemId = item.getItemId();
+		if (itemId == R.id.activity_lista_alunos_menu_remover)
+		{
+			final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+			final Aluno alunoEscolhido = (Aluno) adapter.getItem(menuInfo.position);
+			remove(alunoEscolhido);
+		}
+
 		return super.onContextItemSelected(item);
 	}
 
