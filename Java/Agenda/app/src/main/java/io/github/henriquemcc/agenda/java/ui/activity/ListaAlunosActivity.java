@@ -3,6 +3,7 @@ package io.github.henriquemcc.agenda.java.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,6 +33,13 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 		setTitle(TITULO_APPBAR);
 		configuraFabNovoAluno();
 		configuraLista();
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+	{
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add("Remover");
 	}
 
 	private void configuraFabNovoAluno()
@@ -70,21 +78,7 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 		final ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
 		configuraAdapter(listaDeAlunos);
 		configuraListenerDeCliquePorItem(listaDeAlunos);
-		configuraListenerDeCliqueLongoPorItem(listaDeAlunos);
-	}
-
-	private void configuraListenerDeCliqueLongoPorItem(ListView listaDeAlunos)
-	{
-		listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-		{
-			@Override
-			public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long id)
-			{
-				Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
-				remove(alunoEscolhido);
-				return true;
-			}
-		});
+		registerForContextMenu(listaDeAlunos);
 	}
 
 	private void remove(Aluno aluno)
