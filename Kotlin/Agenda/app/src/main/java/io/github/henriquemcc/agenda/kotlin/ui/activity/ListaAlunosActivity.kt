@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -33,6 +34,14 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 	{
 		super.onCreateContextMenu(menu, v, menuInfo)
 		menu?.add("Remover")
+	}
+
+	override fun onContextItemSelected(item: MenuItem): Boolean
+	{
+		val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+		val alunoEscolhido = adapter?.getItem(menuInfo.position) as Aluno
+		remove(alunoEscolhido)
+		return super.onContextItemSelected(item)
 	}
 
 	private fun configuraFabNovoAluno()
