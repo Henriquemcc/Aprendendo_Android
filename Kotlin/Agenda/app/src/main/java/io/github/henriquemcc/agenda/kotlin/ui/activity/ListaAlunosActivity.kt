@@ -33,7 +33,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 	override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?)
 	{
 		super.onCreateContextMenu(menu, v, menuInfo)
-		menu?.add("Remover")
+		menuInflater.inflate(R.menu.activity_lista_alunos_menu, menu)
 	}
 
 	override fun onContextItemSelected(item: MenuItem): Boolean
