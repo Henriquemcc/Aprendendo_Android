@@ -3,6 +3,7 @@ package io.github.henriquemcc.agenda.kotlin.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -26,6 +27,12 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 		title = TITULO_APPBAR
 		configuraFabNovoAluno()
 		configuraLista()
+	}
+
+	override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?)
+	{
+		super.onCreateContextMenu(menu, v, menuInfo)
+		menu?.add("Remover")
 	}
 
 	private fun configuraFabNovoAluno()
@@ -62,20 +69,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 		val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
 		configuraAdapter(listaDeAlunos)
 		configuraListenerDeCliquePorItem(listaDeAlunos)
-		configurarListenerDeCliqueLongoPorItem(listaDeAlunos)
-	}
-
-	private fun configurarListenerDeCliqueLongoPorItem(listaDeAlunos: ListView)
-	{
-		listaDeAlunos.setOnItemLongClickListener(object : AdapterView.OnItemLongClickListener
-		{
-			override fun onItemLongClick(adapterView: AdapterView<*>?, p1: View?, posicao: Int, id: Long): Boolean
-			{
-				val alunoEscolhido = adapterView?.getItemAtPosition(posicao) as Aluno
-				remove(alunoEscolhido)
-				return true
-			}
-		})
+		registerForContextMenu(listaDeAlunos)
 	}
 
 	private fun remove(aluno: Aluno)
