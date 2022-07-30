@@ -38,9 +38,14 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 
 	override fun onContextItemSelected(item: MenuItem): Boolean
 	{
-		val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-		val alunoEscolhido = adapter?.getItem(menuInfo.position) as Aluno
-		remove(alunoEscolhido)
+		val itemId = item.itemId
+		if (itemId == R.id.activity_lista_alunos_menu_remover)
+		{
+			val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+			val alunoEscolhido = adapter?.getItem(menuInfo.position) as Aluno
+			remove(alunoEscolhido)
+		}
+
 		return super.onContextItemSelected(item)
 	}
 
