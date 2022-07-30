@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +42,15 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 	{
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add("Remover");
+	}
+
+	@Override
+	public boolean onContextItemSelected(@NonNull MenuItem item)
+	{
+		final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final Aluno alunoEscolhido = (Aluno) adapter.getItem(menuInfo.position);
+		remove(alunoEscolhido);
+		return super.onContextItemSelected(item);
 	}
 
 	private void configuraFabNovoAluno()
