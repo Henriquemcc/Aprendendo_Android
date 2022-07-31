@@ -28,7 +28,6 @@ class FormularioAlunoActivity : AppCompatActivity(), ConstantesActivities
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_formulario_aluno)
 		inicializacaoDosCampos()
-		configuraBotaoSalvar()
 		carregaAluno()
 	}
 
@@ -71,18 +70,6 @@ class FormularioAlunoActivity : AppCompatActivity(), ConstantesActivities
 		campoNome?.setText(aluno.nome)
 		campoTelefone?.setText(aluno.telefone)
 		campoEmail?.setText(aluno.email)
-	}
-
-	private fun configuraBotaoSalvar()
-	{
-		val botaoSalvar = findViewById<Button>(R.id.activity_formulario_aluno_botao_salvar)
-		botaoSalvar.setOnClickListener(object : View.OnClickListener
-		{
-			override fun onClick(p0: View?)
-			{
-				finalizaFormulario()
-			}
-		})
 	}
 
 	private fun finalizaFormulario()
