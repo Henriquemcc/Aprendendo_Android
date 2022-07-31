@@ -2,6 +2,8 @@ package io.github.henriquemcc.agenda.kotlin.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -28,6 +30,20 @@ class FormularioAlunoActivity : AppCompatActivity(), ConstantesActivities
 		inicializacaoDosCampos()
 		configuraBotaoSalvar()
 		carregaAluno()
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		menuInflater.inflate(R.menu.activity_formulario_aluno_menu, menu)
+		return super.onCreateOptionsMenu(menu)
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		val itemId = item.itemId
+		if (itemId == R.id.activity_formulario_aluno_menu_salvar)
+		{
+			finalizaFormulario()
+		}
+		return super.onOptionsItemSelected(item)
 	}
 
 	@RequiresApi(33)
