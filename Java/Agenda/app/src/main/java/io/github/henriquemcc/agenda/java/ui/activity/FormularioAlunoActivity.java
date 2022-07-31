@@ -32,7 +32,6 @@ public class FormularioAlunoActivity extends AppCompatActivity implements Consta
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_formulario_aluno);
 		inicializacaoDosCampos();
-		configuraBotaoSalvar();
 		carregaAluno();
 	}
 
@@ -76,21 +75,6 @@ public class FormularioAlunoActivity extends AppCompatActivity implements Consta
 			campoEmail.setText(aluno.getEmail());
 			campoTelefone.setText(aluno.getTelefone());
 		}
-	}
-
-	private void configuraBotaoSalvar()
-	{
-		final Button botaoSalvar = findViewById(R.id.activity_formulario_aluno_botao_salvar);
-		botaoSalvar.setOnClickListener(
-				new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View view)
-					{
-						finalizaFormulario();
-					}
-				}
-		);
 	}
 
 	private void finalizaFormulario()
