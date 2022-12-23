@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,8 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
 
 import io.github.henriquemcc.agenda.java.R;
 import io.github.henriquemcc.agenda.java.dao.AlunoDAO;
@@ -127,7 +124,7 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 
 	private void configuraAdapter(ListView listaDeAlunos)
 	{
-		adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+		adapter = new ArrayAdapter<>(this, R.layout.item_aluno);
 		listaDeAlunos.setAdapter(adapter);
 	}
 }
