@@ -115,7 +115,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 
 	private fun configuraAdapter(listaDeAlunos: ListView?)
 	{
-		adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
+		adapter = ArrayAdapter(this, R.layout.item_aluno)
 		listaDeAlunos?.adapter = adapter
 	}
 }
