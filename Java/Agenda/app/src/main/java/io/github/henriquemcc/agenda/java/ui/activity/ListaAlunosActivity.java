@@ -1,5 +1,7 @@
 package io.github.henriquemcc.agenda.java.ui.activity;
 
+import static io.github.henriquemcc.agenda.java.ui.activity.ConstantesActivities.CHAVE_ALUNO;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +22,9 @@ import io.github.henriquemcc.agenda.java.dao.AlunoDAO;
 import io.github.henriquemcc.agenda.java.model.Aluno;
 import io.github.henriquemcc.agenda.java.ui.adapter.ListaAlunosAdapter;
 
-public class ListaAlunosActivity extends AppCompatActivity implements ConstantesActivities
+public class ListaAlunosActivity extends AppCompatActivity
 {
-	private final String TITULO_APPBAR = "Lista de alunos";
+	public static final String TITULO_APPBAR = "Lista de alunos";
 	private final AlunoDAO dao = new AlunoDAO();
 	private ListaAlunosAdapter adapter;
 	@Override
