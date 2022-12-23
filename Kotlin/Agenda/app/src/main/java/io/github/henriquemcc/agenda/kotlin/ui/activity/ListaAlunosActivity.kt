@@ -17,12 +17,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
+import io.github.henriquemcc.agenda.kotlin.ui.adapter.ListaAlunosAdapter
 
 class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 {
 	private val TITULO_APPBAR = "Lista de alunos"
 	private val dao = AlunoDAO()
-	private var adapter: ArrayAdapter<Any>? = null
+	private lateinit var adapter: ListaAlunosAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -118,27 +119,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 
 	private fun configuraAdapter(listaDeAlunos: ListView?)
 	{
-		adapter = ArrayAdapter(this, R.layout.item_aluno)
-		listaDeAlunos?.adapter = object : BaseAdapter() {
-
-			val alunos = ArrayList<Aluno>()
-
-			override fun getCount(): Int {
-				return alunos.size
-			}
-
-			override fun getItem(posicao: Int): Aluno {
-				return alunos[posicao]
-			}
-
-			override fun getItemId(posicao: Int): Long {
-				return alunos[posicao].id.toLong()
-			}
-
-			override fun getView(p0: Int, p1: View?, viewGroup: ViewGroup?): View {
-				return LayoutInflater.from(this@ListaAlunosActivity).inflate(R.layout.item_aluno, viewGroup)
-			}
-
-		}
+		adapter = ListaAlunosAdapter(this)
+		listaDeAlunos?.adapter = adapter
 	}
 }
