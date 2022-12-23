@@ -4,10 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -116,6 +119,26 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 	private fun configuraAdapter(listaDeAlunos: ListView?)
 	{
 		adapter = ArrayAdapter(this, R.layout.item_aluno)
-		listaDeAlunos?.adapter = adapter
+		listaDeAlunos?.adapter = object : BaseAdapter() {
+
+			val alunos = ArrayList<Aluno>()
+
+			override fun getCount(): Int {
+				return alunos.size
+			}
+
+			override fun getItem(posicao: Int): Aluno {
+				return alunos[posicao]
+			}
+
+			override fun getItemId(posicao: Int): Long {
+				return alunos[posicao].id.toLong()
+			}
+
+			override fun getView(p0: Int, p1: View?, viewGroup: ViewGroup?): View {
+				return LayoutInflater.from(this@ListaAlunosActivity).inflate(R.layout.item_aluno, viewGroup)
+			}
+
+		}
 	}
 }
