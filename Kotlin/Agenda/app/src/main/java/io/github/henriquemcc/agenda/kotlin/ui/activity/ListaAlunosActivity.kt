@@ -4,22 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
+import io.github.henriquemcc.agenda.kotlin.ui.activity.ConstantesActivities.Companion.CHAVE_ALUNO
 import io.github.henriquemcc.agenda.kotlin.ui.adapter.ListaAlunosAdapter
 
-class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
+class ListaAlunosActivity : AppCompatActivity()
 {
 	private val TITULO_APPBAR = "Lista de alunos"
 	private val dao = AlunoDAO()
@@ -46,7 +43,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 		if (itemId == R.id.activity_lista_alunos_menu_remover)
 		{
 			val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-			val alunoEscolhido = adapter?.getItem(menuInfo.position) as Aluno
+			val alunoEscolhido = adapter.getItem(menuInfo.position)
 			remove(alunoEscolhido)
 		}
 
@@ -78,8 +75,8 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 
 	private fun atualizaAlunos()
 	{
-		adapter?.clear()
-		adapter?.addAll(dao.todos())
+		adapter.clear()
+		adapter.addAll(dao.todos())
 	}
 
 	private fun configuraLista()
@@ -93,7 +90,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 	private fun remove(aluno: Aluno)
 	{
 		dao.remove(aluno)
-		adapter?.remove(aluno)
+		adapter.remove(aluno)
 	}
 
 	private fun configuraListenerDeCliquePorItem(listaDeAlunos: ListView)

@@ -1,18 +1,17 @@
 package io.github.henriquemcc.agenda.kotlin.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
+import io.github.henriquemcc.agenda.kotlin.ui.activity.ConstantesActivities.Companion.CHAVE_ALUNO
 
-class FormularioAlunoActivity : AppCompatActivity(), ConstantesActivities
+class FormularioAlunoActivity : AppCompatActivity()
 {
 	private val TITULO_APPBAR_NOVO_ALUNO = "Novo aluno"
 	private val TITULO_APPBAR_EDITA_ALUNO = "Edita aluno"
