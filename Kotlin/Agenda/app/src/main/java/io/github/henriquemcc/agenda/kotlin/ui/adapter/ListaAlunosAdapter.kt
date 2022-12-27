@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.TextView
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
 
@@ -24,8 +25,14 @@ class ListaAlunosAdapter(val context: Context):  BaseAdapter(){
         return alunos[posicao].id.toLong()
     }
 
-    override fun getView(p0: Int, p1: View?, viewGroup: ViewGroup?): View {
-        return LayoutInflater.from(context).inflate(R.layout.item_aluno, viewGroup, false)
+    override fun getView(posicao: Int, view: View?, viewGroup: ViewGroup?): View {
+        val viewCriada = LayoutInflater.from(context).inflate(R.layout.item_aluno, viewGroup, false)
+        val alunoDevolvido = alunos.get(posicao)
+        val nome = viewCriada.findViewById<TextView>(R.id.item_aluno_nome)
+        nome.text = alunoDevolvido.nome
+        val telefone = viewCriada.findViewById<TextView>(R.id.item_aluno_telefone)
+        telefone.text = alunoDevolvido.telefone
+        return viewCriada
     }
 
     fun clear()
