@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.henriquemcc.agenda.kotlin.R
@@ -29,6 +30,12 @@ class ListaAlunosActivity : AppCompatActivity()
 		title = TITULO_APPBAR
 		configuraFabNovoAluno()
 		configuraLista()
+		AlertDialog.Builder(this)
+			.setTitle("Removendo aluno")
+			.setMessage("Tem certeza que quer remover o aluno?")
+			.setPositiveButton("Sim", null)
+			.setNegativeButton("Não", null)
+			.show()
 	}
 
 	override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?)
