@@ -1,5 +1,6 @@
 package io.github.henriquemcc.agenda.kotlin.ui.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -30,12 +31,6 @@ class ListaAlunosActivity : AppCompatActivity()
 		title = TITULO_APPBAR
 		configuraFabNovoAluno()
 		configuraLista()
-		AlertDialog.Builder(this)
-			.setTitle("Removendo aluno")
-			.setMessage("Tem certeza que quer remover o aluno?")
-			.setPositiveButton("Sim", null)
-			.setNegativeButton("Não", null)
-			.show()
 	}
 
 	override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?)
@@ -49,9 +44,18 @@ class ListaAlunosActivity : AppCompatActivity()
 		val itemId = item.itemId
 		if (itemId == R.id.activity_lista_alunos_menu_remover)
 		{
-			val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-			val alunoEscolhido = adapter.getItem(menuInfo.position)
-			remove(alunoEscolhido)
+			AlertDialog.Builder(this)
+				.setTitle("Removendo aluno")
+				.setMessage("Tem certeza que quer remover o aluno?")
+				.setPositiveButton("Sim", object: DialogInterface.OnClickListener {
+					override fun onClick(p0: DialogInterface?, p1: Int) {
+						val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+						val alunoEscolhido = adapter.getItem(menuInfo.position)
+						remove(alunoEscolhido)
+					}
+				})
+				.setNegativeButton("Não", null)
+				.show()
 		}
 
 		return super.onContextItemSelected(item)
