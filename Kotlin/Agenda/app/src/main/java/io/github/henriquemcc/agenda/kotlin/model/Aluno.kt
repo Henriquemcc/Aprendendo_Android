@@ -8,7 +8,7 @@ class Aluno(var nome: String = "", var telefone: String = "", var email: String 
 
 	override fun toString(): String
 	{
-		return nome;
+		return nome
 	}
 
 	fun temIdValido(): Boolean

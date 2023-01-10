@@ -9,9 +9,9 @@ import android.widget.TextView
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
 
-class ListaAlunosAdapter(val context: Context):  BaseAdapter(){
+class ListaAlunosAdapter(private val context: Context):  BaseAdapter(){
 
-    val alunos = ArrayList<Aluno>()
+    private val alunos = ArrayList<Aluno>()
 
     override fun getCount(): Int {
         return alunos.size

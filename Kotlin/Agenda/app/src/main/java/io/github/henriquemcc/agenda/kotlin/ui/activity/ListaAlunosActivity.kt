@@ -105,16 +105,14 @@ class ListaAlunosActivity : AppCompatActivity()
 
 	private fun configuraListenerDeCliquePorItem(listaDeAlunos: ListView)
 	{
-		listaDeAlunos.setOnItemClickListener(object : AdapterView.OnItemClickListener
-		{
-			override fun onItemClick(adapterView: AdapterView<*>?, p1: View?, posicao: Int, id: Long)
-			{
+		listaDeAlunos.onItemClickListener = object : AdapterView.OnItemClickListener {
+			override fun onItemClick(adapterView: AdapterView<*>?, p1: View?, posicao: Int, id: Long) {
 				val alunoEscolhido = adapterView?.getItemAtPosition(posicao) as Aluno
 				Log.i("idAluno", alunoEscolhido.id.toString())
 				abreFormularioModoEditaAluno(alunoEscolhido)
 			}
 
-		})
+		}
 	}
 
 	private fun abreFormularioModoEditaAluno(aluno: Aluno)
