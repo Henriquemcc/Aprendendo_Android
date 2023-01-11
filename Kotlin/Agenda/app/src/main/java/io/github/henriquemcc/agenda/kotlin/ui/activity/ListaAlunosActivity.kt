@@ -43,19 +43,23 @@ class ListaAlunosActivity : AppCompatActivity()
 		val itemId = item.itemId
 		if (itemId == R.id.activity_lista_alunos_menu_remover)
 		{
-			AlertDialog.Builder(this)
-				.setTitle("Removendo aluno")
-				.setMessage("Tem certeza que quer remover o aluno?")
-				.setPositiveButton("Sim") { p0, p1 ->
-					val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-					val alunoEscolhido = adapter.getItem(menuInfo.position)
-					remove(alunoEscolhido)
-				}
-				.setNegativeButton("Não", null)
-				.show()
+			confirmaRemocao(item)
 		}
 
 		return super.onContextItemSelected(item)
+	}
+
+	private fun confirmaRemocao(item: MenuItem) {
+		AlertDialog.Builder(this)
+			.setTitle("Removendo aluno")
+			.setMessage("Tem certeza que quer remover o aluno?")
+			.setPositiveButton("Sim") { _, _ ->
+				val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+				val alunoEscolhido = adapter.getItem(menuInfo.position)
+				remove(alunoEscolhido)
+			}
+			.setNegativeButton("Não", null)
+			.show()
 	}
 
 	private fun configuraFabNovoAluno()
