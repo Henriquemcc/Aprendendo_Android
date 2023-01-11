@@ -1,6 +1,5 @@
 package io.github.henriquemcc.agenda.kotlin.ui.activity
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -47,13 +46,11 @@ class ListaAlunosActivity : AppCompatActivity()
 			AlertDialog.Builder(this)
 				.setTitle("Removendo aluno")
 				.setMessage("Tem certeza que quer remover o aluno?")
-				.setPositiveButton("Sim", object: DialogInterface.OnClickListener {
-					override fun onClick(p0: DialogInterface?, p1: Int) {
-						val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-						val alunoEscolhido = adapter.getItem(menuInfo.position)
-						remove(alunoEscolhido)
-					}
-				})
+				.setPositiveButton("Sim") { p0, p1 ->
+					val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+					val alunoEscolhido = adapter.getItem(menuInfo.position)
+					remove(alunoEscolhido)
+				}
 				.setNegativeButton("Não", null)
 				.show()
 		}
@@ -64,13 +61,7 @@ class ListaAlunosActivity : AppCompatActivity()
 	private fun configuraFabNovoAluno()
 	{
 		val botaoNovoAluno = findViewById<FloatingActionButton>(R.id.activity_lista_alunos_fab_novo_aluno)
-		botaoNovoAluno.setOnClickListener(object : View.OnClickListener
-		{
-			override fun onClick(p0: View?)
-			{
-				abreFormularioModoInsereAluno()
-			}
-		})
+		botaoNovoAluno.setOnClickListener { abreFormularioModoInsereAluno() }
 	}
 
 	private fun abreFormularioModoInsereAluno()
@@ -105,14 +96,12 @@ class ListaAlunosActivity : AppCompatActivity()
 
 	private fun configuraListenerDeCliquePorItem(listaDeAlunos: ListView)
 	{
-		listaDeAlunos.onItemClickListener = object : AdapterView.OnItemClickListener {
-			override fun onItemClick(adapterView: AdapterView<*>?, p1: View?, posicao: Int, id: Long) {
+		listaDeAlunos.onItemClickListener =
+			AdapterView.OnItemClickListener { adapterView, p1, posicao, id ->
 				val alunoEscolhido = adapterView?.getItemAtPosition(posicao) as Aluno
 				Log.i("idAluno", alunoEscolhido.id.toString())
 				abreFormularioModoEditaAluno(alunoEscolhido)
 			}
-
-		}
 	}
 
 	private fun abreFormularioModoEditaAluno(aluno: Aluno)
