@@ -8,12 +8,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.henriquemcc.agenda.kotlin.R
 import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
+import io.github.henriquemcc.agenda.kotlin.ui.ListaAlunosView
 import io.github.henriquemcc.agenda.kotlin.ui.activity.ConstantesActivities.Companion.CHAVE_ALUNO
 import io.github.henriquemcc.agenda.kotlin.ui.adapter.ListaAlunosAdapter
 
@@ -22,6 +22,7 @@ class ListaAlunosActivity : AppCompatActivity()
 	private val TITULO_APPBAR = "Lista de alunos"
 	private val dao = AlunoDAO()
 	private lateinit var adapter: ListaAlunosAdapter
+	private val listaAlunosView = ListaAlunosView()
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -43,23 +44,10 @@ class ListaAlunosActivity : AppCompatActivity()
 		val itemId = item.itemId
 		if (itemId == R.id.activity_lista_alunos_menu_remover)
 		{
-			confirmaRemocao(item)
+			listaAlunosView.confirmaRemocao(item)
 		}
 
 		return super.onContextItemSelected(item)
-	}
-
-	private fun confirmaRemocao(item: MenuItem) {
-		AlertDialog.Builder(this)
-			.setTitle("Removendo aluno")
-			.setMessage("Tem certeza que quer remover o aluno?")
-			.setPositiveButton("Sim") { _, _ ->
-				val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-				val alunoEscolhido = adapter.getItem(menuInfo.position)
-				remove(alunoEscolhido)
-			}
-			.setNegativeButton("Não", null)
-			.show()
 	}
 
 	private fun configuraFabNovoAluno()
@@ -76,26 +64,15 @@ class ListaAlunosActivity : AppCompatActivity()
 	override fun onResume()
 	{
 		super.onResume()
-		atualizaAlunos()
-	}
-
-	private fun atualizaAlunos()
-	{
-		adapter.atualiza(dao.todos())
+		listaAlunosView.atualizaAlunos()
 	}
 
 	private fun configuraLista()
 	{
 		val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
-		configuraAdapter(listaDeAlunos)
+		listaAlunosView.configuraAdapter(listaDeAlunos)
 		configuraListenerDeCliquePorItem(listaDeAlunos)
 		registerForContextMenu(listaDeAlunos)
-	}
-
-	private fun remove(aluno: Aluno)
-	{
-		dao.remove(aluno)
-		adapter.remove(aluno)
 	}
 
 	private fun configuraListenerDeCliquePorItem(listaDeAlunos: ListView)
@@ -113,11 +90,5 @@ class ListaAlunosActivity : AppCompatActivity()
 		val vaiParaFormularioActivity = Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java)
 		vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno)
 		startActivity(vaiParaFormularioActivity)
-	}
-
-	private fun configuraAdapter(listaDeAlunos: ListView?)
-	{
-		adapter = ListaAlunosAdapter(this)
-		listaDeAlunos?.adapter = adapter
 	}
 }
