@@ -11,18 +11,14 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.henriquemcc.agenda.kotlin.R
-import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
 import io.github.henriquemcc.agenda.kotlin.ui.ListaAlunosView
 import io.github.henriquemcc.agenda.kotlin.ui.activity.ConstantesActivities.Companion.CHAVE_ALUNO
-import io.github.henriquemcc.agenda.kotlin.ui.adapter.ListaAlunosAdapter
 
 class ListaAlunosActivity : AppCompatActivity()
 {
 	private val TITULO_APPBAR = "Lista de alunos"
-	private val dao = AlunoDAO()
-	private lateinit var adapter: ListaAlunosAdapter
-	private val listaAlunosView = ListaAlunosView()
+	private val listaAlunosView = ListaAlunosView(this)
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{

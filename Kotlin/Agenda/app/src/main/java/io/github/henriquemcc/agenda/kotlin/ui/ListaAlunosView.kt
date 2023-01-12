@@ -1,17 +1,21 @@
 package io.github.henriquemcc.agenda.kotlin.ui
 
-import android.system.Os.remove
+import android.content.Context
 import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
+import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
 import io.github.henriquemcc.agenda.kotlin.ui.adapter.ListaAlunosAdapter
 
-class ListaAlunosView {
+class ListaAlunosView(private val context: Context) {
+
+    private val adapter: ListaAlunosAdapter = ListaAlunosAdapter(context)
+    private val dao: AlunoDAO = AlunoDAO()
 
     fun confirmaRemocao(item: MenuItem) {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(context)
             .setTitle("Removendo aluno")
             .setMessage("Tem certeza que quer remover o aluno?")
             .setPositiveButton("Sim") { _, _ ->
@@ -28,7 +32,7 @@ class ListaAlunosView {
         adapter.atualiza(dao.todos())
     }
 
-    fun remove(aluno: Aluno)
+    private fun remove(aluno: Aluno)
     {
         dao.remove(aluno)
         adapter.remove(aluno)
@@ -36,7 +40,6 @@ class ListaAlunosView {
 
     fun configuraAdapter(listaDeAlunos: ListView?)
     {
-        adapter = ListaAlunosAdapter(this)
         listaDeAlunos?.adapter = adapter
     }
 }
