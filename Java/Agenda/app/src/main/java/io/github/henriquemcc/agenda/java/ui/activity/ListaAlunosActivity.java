@@ -23,7 +23,7 @@ import io.github.henriquemcc.agenda.java.ui.ListaAlunosView;
 public class ListaAlunosActivity extends AppCompatActivity
 {
 	public static final String TITULO_APPBAR = "Lista de alunos";
-	private final ListaAlunosView listaAlunosView = new ListaAlunosView();
+	private final ListaAlunosView listaAlunosView = new ListaAlunosView(this);
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
