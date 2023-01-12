@@ -41,7 +41,7 @@ class AlunoDAO
 		if (alunoEncontrado != null)
 		{
 			val posicaoDoAluno = alunos.indexOf(alunoEncontrado)
-			alunos.set(posicaoDoAluno, aluno)
+			alunos[posicaoDoAluno] = aluno
 		}
 	}
 

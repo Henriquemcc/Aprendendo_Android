@@ -14,7 +14,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:layout_alignParentBottom="true"
-        android:contentDescription="Adicionar novo aluno"
+        android:contentDescription="@string/adicionar_aluno"
         android:src="@drawable/ic_action_novo_aluno"/>
 
     <ListView

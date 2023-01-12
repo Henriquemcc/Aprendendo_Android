@@ -7,19 +7,18 @@ import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.henriquemcc.agenda.kotlin.R
-import io.github.henriquemcc.agenda.kotlin.dao.AlunoDAO
 import io.github.henriquemcc.agenda.kotlin.model.Aluno
+import io.github.henriquemcc.agenda.kotlin.ui.ListaAlunosView
+import io.github.henriquemcc.agenda.kotlin.ui.activity.ConstantesActivities.Companion.CHAVE_ALUNO
 
-class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
+class ListaAlunosActivity : AppCompatActivity()
 {
 	private val TITULO_APPBAR = "Lista de alunos"
-	private val dao = AlunoDAO()
-	private var adapter: ArrayAdapter<Any>? = null
+	private val listaAlunosView = ListaAlunosView(this)
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -41,9 +40,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 		val itemId = item.itemId
 		if (itemId == R.id.activity_lista_alunos_menu_remover)
 		{
-			val menuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-			val alunoEscolhido = adapter?.getItem(menuInfo.position) as Aluno
-			remove(alunoEscolhido)
+			listaAlunosView.confirmaRemocao(item)
 		}
 
 		return super.onContextItemSelected(item)
@@ -52,13 +49,7 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 	private fun configuraFabNovoAluno()
 	{
 		val botaoNovoAluno = findViewById<FloatingActionButton>(R.id.activity_lista_alunos_fab_novo_aluno)
-		botaoNovoAluno.setOnClickListener(object : View.OnClickListener
-		{
-			override fun onClick(p0: View?)
-			{
-				abreFormularioModoInsereAluno()
-			}
-		})
+		botaoNovoAluno.setOnClickListener { abreFormularioModoInsereAluno() }
 	}
 
 	private fun abreFormularioModoInsereAluno()
@@ -69,41 +60,25 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 	override fun onResume()
 	{
 		super.onResume()
-		atualizaAlunos()
-	}
-
-	private fun atualizaAlunos()
-	{
-		adapter?.clear()
-		adapter?.addAll(dao.todos())
+		listaAlunosView.atualizaAlunos()
 	}
 
 	private fun configuraLista()
 	{
 		val listaDeAlunos = findViewById<ListView>(R.id.activity_lista_alunos_listview)
-		configuraAdapter(listaDeAlunos)
+		listaAlunosView.configuraAdapter(listaDeAlunos)
 		configuraListenerDeCliquePorItem(listaDeAlunos)
 		registerForContextMenu(listaDeAlunos)
 	}
 
-	private fun remove(aluno: Aluno)
-	{
-		dao.remove(aluno)
-		adapter?.remove(aluno)
-	}
-
 	private fun configuraListenerDeCliquePorItem(listaDeAlunos: ListView)
 	{
-		listaDeAlunos.setOnItemClickListener(object : AdapterView.OnItemClickListener
-		{
-			override fun onItemClick(adapterView: AdapterView<*>?, p1: View?, posicao: Int, id: Long)
-			{
+		listaDeAlunos.onItemClickListener =
+			AdapterView.OnItemClickListener { adapterView, p1, posicao, id ->
 				val alunoEscolhido = adapterView?.getItemAtPosition(posicao) as Aluno
 				Log.i("idAluno", alunoEscolhido.id.toString())
 				abreFormularioModoEditaAluno(alunoEscolhido)
 			}
-
-		})
 	}
 
 	private fun abreFormularioModoEditaAluno(aluno: Aluno)
@@ -111,11 +86,5 @@ class ListaAlunosActivity : AppCompatActivity(), ConstantesActivities
 		val vaiParaFormularioActivity = Intent(this@ListaAlunosActivity, FormularioAlunoActivity::class.java)
 		vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno)
 		startActivity(vaiParaFormularioActivity)
-	}
-
-	private fun configuraAdapter(listaDeAlunos: ListView?)
-	{
-		adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
-		listaDeAlunos?.adapter = adapter
 	}
 }

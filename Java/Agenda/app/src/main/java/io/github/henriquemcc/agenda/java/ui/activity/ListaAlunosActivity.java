@@ -1,14 +1,13 @@
 package io.github.henriquemcc.agenda.java.ui.activity;
 
+import static io.github.henriquemcc.agenda.java.ui.activity.ConstantesActivities.CHAVE_ALUNO;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -17,17 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
 import io.github.henriquemcc.agenda.java.R;
-import io.github.henriquemcc.agenda.java.dao.AlunoDAO;
 import io.github.henriquemcc.agenda.java.model.Aluno;
+import io.github.henriquemcc.agenda.java.ui.ListaAlunosView;
 
-public class ListaAlunosActivity extends AppCompatActivity implements ConstantesActivities
+public class ListaAlunosActivity extends AppCompatActivity
 {
-	private final String TITULO_APPBAR = "Lista de alunos";
-	private final AlunoDAO dao = new AlunoDAO();
-	private ArrayAdapter adapter;
+	public static final String TITULO_APPBAR = "Lista de alunos";
+	private final ListaAlunosView listaAlunosView = new ListaAlunosView(this);
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -46,30 +43,23 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 	}
 
 	@Override
-	public boolean onContextItemSelected(@NonNull MenuItem item)
+	public boolean onContextItemSelected(@NonNull final MenuItem item)
 	{
 		final int itemId = item.getItemId();
 		if (itemId == R.id.activity_lista_alunos_menu_remover)
 		{
-			final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-			final Aluno alunoEscolhido = (Aluno) adapter.getItem(menuInfo.position);
-			remove(alunoEscolhido);
+			listaAlunosView.confirmaRemocao(item);
 		}
 
 		return super.onContextItemSelected(item);
 	}
 
+
+
 	private void configuraFabNovoAluno()
 	{
 		final FloatingActionButton botaoNovoAluno = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
-		botaoNovoAluno.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				abreFormularioModoInsereAluno();
-			}
-		});
+		botaoNovoAluno.setOnClickListener(view -> abreFormularioModoInsereAluno());
 	}
 
 	private void abreFormularioModoInsereAluno()
@@ -81,40 +71,28 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 	protected void onResume()
 	{
 		super.onResume();
-		atualizaAlunos();
+		listaAlunosView.atualizaAlunos();
 	}
 
-	private void atualizaAlunos()
-	{
-		adapter.clear();
-		adapter.addAll(dao.todos());
-	}
+
 
 	private void configuraLista()
 	{
 		final ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
-		configuraAdapter(listaDeAlunos);
+		listaAlunosView.configuraAdapter(listaDeAlunos);
 		configuraListenerDeCliquePorItem(listaDeAlunos);
 		registerForContextMenu(listaDeAlunos);
 	}
 
-	private void remove(Aluno aluno)
-	{
-		dao.remove(aluno);
-		adapter.remove(aluno);
-	}
+
 
 	private void configuraListenerDeCliquePorItem(ListView listaDeAlunos)
 	{
-		listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		listaDeAlunos.setOnItemClickListener((adapterView, view, posicao, id) ->
 		{
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id)
-			{
-				Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
-				Log.i("idAluno", String.valueOf(alunoEscolhido.getId()));
-				abreFormularioModoEditaAluno(alunoEscolhido);
-			}
+			Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+			Log.i("idAluno", String.valueOf(alunoEscolhido.getId()));
+			abreFormularioModoEditaAluno(alunoEscolhido);
 		});
 	}
 
@@ -125,9 +103,5 @@ public class ListaAlunosActivity extends AppCompatActivity implements Constantes
 		startActivity(vaiParaFormularioActivity);
 	}
 
-	private void configuraAdapter(ListView listaDeAlunos)
-	{
-		adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-		listaDeAlunos.setAdapter(adapter);
-	}
+
 }
