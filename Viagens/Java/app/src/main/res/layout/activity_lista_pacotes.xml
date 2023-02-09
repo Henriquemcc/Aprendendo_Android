@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.ListaPacotesActivity">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:srcCompat="@android:color/holo_purple" />
 
     <TextView
         android:id="@+id/textView2"
@@ -13,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="Especiais"
+        android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,9 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Brasil"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@id/textView2"/>
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
